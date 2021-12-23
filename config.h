@@ -1,8 +1,10 @@
 /* See LICENSE file for copyright and license details. */
 
+#include <X11/XF86keysym.h>
+
 /* appearance */
 static const unsigned int borderpx  = 1;        /* border pixel of windows */
-static const unsigned int snap      = 32;       /* snap pixel */
+static const unsigned int snap      = 0;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const char *fonts[]          = { "monospace:size=10" };
@@ -34,7 +36,7 @@ static const Rule rules[] = {
 /* layout(s) */
 static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
-static const int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
+static const int resizehints = 0;    /* 1 means respect size hints in tiled resizals */
 static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen window */
 
 static const Layout layouts[] = {
@@ -45,7 +47,7 @@ static const Layout layouts[] = {
 };
 
 /* key definitions */
-#define MODKEY Mod1Mask
+#define MODKEY Mod4Mask
 #define TAGKEYS(KEY,TAG) \
 	{ MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
 	{ MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
@@ -58,11 +60,28 @@ static const Layout layouts[] = {
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
-static const char *termcmd[]  = { "st", NULL };
+static const char *termcmd[]  = { "urxvt", NULL };
+static const char *upvol[] = { "amixer", "-q", "sset", "Master", "5%+", NULL };
+static const char *downvol[] = { "amixer", "-q", "sset", "Master", "5%-", NULL };
+static const char *mute[] = { "amixer", "-q", "-D", "pulse", "sset", "Master", "toggle", NULL };
 
-static const Key keys[] = {
+static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
+	{ 0,              XF86XK_AudioRaiseVolume, spawn,          {.v = upvol } },
+        { 0,              XF86XK_AudioLowerVolume, spawn,          {.v = downvol } },
+        { 0,              XF86XK_AudioMute,        spawn,          {.v = mute } },
+	{ 0,                       XF86XK_MonBrightnessUp,      spawn,          SHCMD("xbacklight -inc 10")},
+	{ 0,                       XF86XK_MonBrightnessDown,      spawn,          SHCMD("xbacklight -dec 10")},
+	{ MODKEY|ControlMask,                       XK_Escape,      spawn,          SHCMD("shutdown now")},
+	{ MODKEY,                       XK_Print,      spawn,          SHCMD("scrot ~/screenshots/%Y-%m-%d-%T-screenshot.png")},
+	{ MODKEY|ShiftMask,                       XK_Print,      spawn,          SHCMD("sleep 0.2; scrot -s ~/screenshots/%Y-%m-%d-%T-screenshot.png")},
+	{ MODKEY,                       XK_r,      spawn,          SHCMD("urxvt -e ranger")},
+	{ MODKEY,                       XK_v,      spawn,          SHCMD("GTK_THEME=Adwaita:dark virt-manager")},
+	{ MODKEY|ShiftMask,             XK_m,      spawn,          SHCMD("./maple*/bin/xmaple")},
+	{ MODKEY,                       XK_z,      spawn,          SHCMD("slock")},
+	{ MODKEY,                       XK_o,      spawn,          SHCMD("slock $(systemctl suspend)")},
+	{ MODKEY,                       XK_s,      spawn,          SHCMD("firejail --apparmor --seccomp --caps --caps.drop=all --nonewprivs --private-tmp --private-cache --private-dev --disable-mnt --netfilter --nodvd --notv --nou2f --nodbus firefox")},
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
@@ -95,12 +114,12 @@ static const Key keys[] = {
 	TAGKEYS(                        XK_7,                      6)
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
-	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
+	{ MODKEY|ControlMask,             XK_u,      quit,           {0} },
 };
 
 /* button definitions */
 /* click can be ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle, ClkClientWin, or ClkRootWin */
-static const Button buttons[] = {
+static Button buttons[] = {
 	/* click                event mask      button          function        argument */
 	{ ClkLtSymbol,          0,              Button1,        setlayout,      {0} },
 	{ ClkLtSymbol,          0,              Button3,        setlayout,      {.v = &layouts[2]} },
