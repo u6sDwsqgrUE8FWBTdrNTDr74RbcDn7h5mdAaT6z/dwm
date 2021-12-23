@@ -78,7 +78,6 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,                       XK_Print,      spawn,          SHCMD("sleep 0.2; scrot -s ~/screenshots/%Y-%m-%d-%T-screenshot.png")},
 	{ MODKEY,                       XK_r,      spawn,          SHCMD("urxvt -e ranger")},
 	{ MODKEY,                       XK_v,      spawn,          SHCMD("GTK_THEME=Adwaita:dark virt-manager")},
-	{ MODKEY|ShiftMask,             XK_m,      spawn,          SHCMD("./maple*/bin/xmaple")},
 	{ MODKEY,                       XK_z,      spawn,          SHCMD("slock")},
 	{ MODKEY,                       XK_o,      spawn,          SHCMD("slock $(systemctl suspend)")},
 	{ MODKEY,                       XK_s,      spawn,          SHCMD("firejail --apparmor --seccomp --caps --caps.drop=all --nonewprivs --private-tmp --private-cache --private-dev --disable-mnt --netfilter --nodvd --notv --nou2f --nodbus firefox")},
