@@ -60,7 +60,7 @@ static const Layout layouts[] = {
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
-static const char *termcmd[]  = { "urxvt", NULL };
+static const char *termcmd[]  = { "alacritty", NULL };
 static const char *upvol[] = { "amixer", "-q", "sset", "Master", "5%+", NULL };
 static const char *downvol[] = { "amixer", "-q", "sset", "Master", "5%-", NULL };
 static const char *mute[] = { "amixer", "-q", "-D", "pulse", "sset", "Master", "toggle", NULL };
@@ -76,7 +76,6 @@ static Key keys[] = {
 	{ MODKEY|ControlMask,                       XK_Escape,      spawn,          SHCMD("shutdown now")},
 	{ MODKEY,                       XK_Print,      spawn,          SHCMD("scrot ~/screenshots/%Y-%m-%d-%T-screenshot.png")},
 	{ MODKEY|ShiftMask,                       XK_Print,      spawn,          SHCMD("sleep 0.2; scrot -s ~/screenshots/%Y-%m-%d-%T-screenshot.png")},
-	{ MODKEY,                       XK_r,      spawn,          SHCMD("urxvt -e ranger")},
 	{ MODKEY,                       XK_v,      spawn,          SHCMD("GTK_THEME=Adwaita:dark virt-manager")},
 	{ MODKEY,                       XK_z,      spawn,          SHCMD("slock")},
 	{ MODKEY,                       XK_o,      spawn,          SHCMD("slock $(systemctl suspend)")},
