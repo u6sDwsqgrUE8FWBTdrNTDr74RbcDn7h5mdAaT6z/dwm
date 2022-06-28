@@ -61,6 +61,7 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 static const char *termcmd[]  = { "alacritty", NULL };
+static const char *browser[]  = { "firejail",  "--apparmor", "--seccomp", "--caps", "--caps.drop=all", "--nonewprivs", "--private-tmp", "--private-cache", "--private-dev", "--disable-mnt", "--netfilter", "--nodvd", "--notv", "--nou2f", "--nodbus", "firefox", NULL };
 static const char *upvol[] = { "amixer", "-q", "sset", "Master", "5%+", NULL };
 static const char *downvol[] = { "amixer", "-q", "sset", "Master", "5%-", NULL };
 static const char *mute[] = { "amixer", "-q", "-D", "pulse", "sset", "Master", "toggle", NULL };
@@ -69,17 +70,17 @@ static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
 	{ 0,              XF86XK_AudioRaiseVolume, spawn,          {.v = upvol } },
-        { 0,              XF86XK_AudioLowerVolume, spawn,          {.v = downvol } },
-        { 0,              XF86XK_AudioMute,        spawn,          {.v = mute } },
+	{ 0,              XF86XK_AudioLowerVolume, spawn,          {.v = downvol } },
+	{ 0,              XF86XK_AudioMute,        spawn,          {.v = mute } },
 	{ 0,                       XF86XK_MonBrightnessUp,      spawn,          SHCMD("xbacklight -inc 10")},
 	{ 0,                       XF86XK_MonBrightnessDown,      spawn,          SHCMD("xbacklight -dec 10")},
 	{ MODKEY|ControlMask,                       XK_Escape,      spawn,          SHCMD("shutdown now")},
 	{ MODKEY,                       XK_Print,      spawn,          SHCMD("scrot ~/screenshots/%Y-%m-%d-%T-screenshot.png")},
 	{ MODKEY|ShiftMask,                       XK_Print,      spawn,          SHCMD("sleep 0.2; scrot -s ~/screenshots/%Y-%m-%d-%T-screenshot.png")},
-	{ MODKEY,                       XK_v,      spawn,          SHCMD("GTK_THEME=Adwaita:dark virt-manager")},
+	{ MODKEY,                       XK_v,      spawn,          SHCMD("virt-manager")},
 	{ MODKEY,                       XK_z,      spawn,          SHCMD("slock")},
 	{ MODKEY,                       XK_o,      spawn,          SHCMD("slock $(systemctl suspend)")},
-	{ MODKEY,                       XK_s,      spawn,          SHCMD("firejail --apparmor --seccomp --caps --caps.drop=all --nonewprivs --private-tmp --private-cache --private-dev --disable-mnt --netfilter --nodvd --notv --nou2f --nodbus firefox")},
+	{ MODKEY,                       XK_s,      spawn,          {.v = browser} },
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
