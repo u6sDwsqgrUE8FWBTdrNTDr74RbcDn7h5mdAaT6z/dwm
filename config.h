@@ -62,16 +62,13 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 static const char *termcmd[]  = { "alacritty", NULL };
 static const char *browser[]  = { "firejail",  "--apparmor", "--seccomp", "--caps", "--caps.drop=all", "--nonewprivs", "--private-tmp", "--private-cache", "--private-dev", "--disable-mnt", "--netfilter", "--nodvd", "--notv", "--nou2f", "--nodbus", "firefox", NULL };
-static const char *upvol[] = { "amixer", "-q", "sset", "Master", "5%+", NULL };
-static const char *downvol[] = { "amixer", "-q", "sset", "Master", "5%-", NULL };
-static const char *mute[] = { "amixer", "-q", "-D", "pulse", "sset", "Master", "toggle", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
-	{ 0,              XF86XK_AudioRaiseVolume, spawn,          {.v = upvol } },
-	{ 0,              XF86XK_AudioLowerVolume, spawn,          {.v = downvol } },
-	{ 0,              XF86XK_AudioMute,        spawn,          {.v = mute } },
+	{ 0,              XF86XK_AudioRaiseVolume, spawn,          SHCMD("pamixer -i 5; kill -44 $(pidof dwmblocks)")},
+	{ 0,              XF86XK_AudioLowerVolume, spawn,          SHCMD("pamixer -d 5; kill -44 $(pidof dwmblocks)")},
+	{ 0,              XF86XK_AudioMute,        spawn,          SHCMD("pamixer -t; kill -44 $(pidof dwmblocks)")},
 	{ 0,                       XF86XK_MonBrightnessUp,      spawn,          SHCMD("xbacklight -inc 10")},
 	{ 0,                       XF86XK_MonBrightnessDown,      spawn,          SHCMD("xbacklight -dec 10")},
 	{ MODKEY|ControlMask,                       XK_Escape,      spawn,          SHCMD("shutdown now")},
