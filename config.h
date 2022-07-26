@@ -79,7 +79,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,                       XK_Print,      spawn,          SHCMD("sleep 0.2; scrot -s ~/screenshots/%Y-%m-%d-%T-screenshot.png")},
 	{ MODKEY,                       XK_v,      spawn,          SHCMD("virt-manager")},
 	{ MODKEY,                       XK_z,      spawn,          SHCMD("slock")},
-	{ MODKEY,                       XK_o,      spawn,          SHCMD("slock $(systemctl suspend)")},
+	{ MODKEY|ControlMask,           XK_o,      spawn,          SHCMD("slock $(systemctl suspend)")},
 	{ MODKEY,                       XK_s,      spawn,          {.v = browser} },
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
