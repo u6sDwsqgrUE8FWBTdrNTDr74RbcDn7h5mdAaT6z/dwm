@@ -62,7 +62,7 @@ static const Layout layouts[] = {
 /* commands */
 static const char *dmenucmd[] = { "dmenu_run", "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 static const char *termcmd[]  = { "alacritty", NULL };
-static const char *browser[]  = { "firejail",  "--apparmor", "--seccomp", "--caps", "--caps.drop=all", "--nonewprivs", "--private-tmp", "--private-cache", "--private-dev", "--disable-mnt", "--netfilter", "--nodvd", "--notv", "--nou2f", "--nodbus", "firefox", NULL };
+static const char *browser[]  = { "firefox", NULL };
 
 #include "movestack.c"
 static const Key keys[] = {
